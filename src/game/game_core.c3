@@ -11,7 +11,7 @@ fn void runGame() {
 	rl::setTargetFPS(60);
     
 	GameAssets assets = gameAssetsInitAndLoad();
-	GameState* current_state = initTitleState();
+	GameState* current_state = initTitleState(&assets);
 	List{GameEventConfig} event_pump;
 	event_pump.init(mem);
 
@@ -25,10 +25,10 @@ fn void runGame() {
 			if(config.event == GameEvent.CHANGE_STATE) {
 				current_state.unload();
 				if(config.state_to_change_to == EngineState.PLAY) {
-					current_state = initPlayState();
+					current_state = initPlayState(&assets);
 				}
 				else if(config.state_to_change_to == EngineState.TITLE) {
-					current_state = initTitleState();
+					current_state = initTitleState(&assets);
 				}
 				config.completed = true;
 			}

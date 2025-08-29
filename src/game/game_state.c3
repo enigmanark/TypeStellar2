@@ -14,7 +14,7 @@ struct GameState {
 	EntityManager* entity_manager;
 }
 
-fn GameState* initPlayState() {
+fn GameState* initPlayState(GameAssets* assets) {
 	io::printfn("INFO: Initializing Play State...");
 	GameState* state = mem::new(GameState);
 
@@ -38,7 +38,7 @@ fn GameState* initPlayState() {
 	return state;
 }
 
-fn GameState* initTitleState() {
+fn GameState* initTitleState(GameAssets* assets) {
 	io::printfn("INFO: Initializing Title State...");
 	GameState* state = mem::new(GameState);
 
@@ -46,10 +46,14 @@ fn GameState* initTitleState() {
 
 	Entity* title = state.entity_manager.newEntity();
 	title.art = ArtAsset.NONE;
-	title.x = 0;
-	title.y = 0;
 	title.gui_text = WINDOW_TITLE;
 	title.gui_text_size = 70;
+
+	rl::Vector2 title_size = rl::measureTextEx(assets.main_font, (ZString)title.gui_text, title.gui_text_size, 2);
+	title.x = (WINDOW_WIDTH / 2) - (title_size.x / 2);
+	title.y = WINDOW_HEIGHT / 2 - 100;
+	
+	
 	title.emitter_config = newEventConfig(GameEvent.CHANGE_STATE, EngineState.PLAY);
 	title.emitter_key = rl::KEY_SPACE;
 	title.addFlag(EntityFlag.HAS_GUI_TEXT);
