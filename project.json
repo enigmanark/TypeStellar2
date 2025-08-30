@@ -8,7 +8,7 @@
   "sources":  [ "src/**" ],
   "output": "build",
   "targets": {
-    "o_type_stellar": {
+    "type_stellar_2": {
       "type": "executable"
     }
   },
