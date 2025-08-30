@@ -15,7 +15,24 @@ fn void sysRender(GameState* state, GameAssets* assets) {
 			//Render sprites
 			if(flag_a == EntityFlag.HAS_SPRITE) {
 				rl::Texture2D tex = assets.getTexture(entity.art);
-				rl::drawTexture(tex, (int)entity.x, (int)entity.y, rl::WHITE);
+				foreach(flag_b_index, flag_b : flags) {
+					if(flag_b == EntityFlag.IS_ANIMATED) {
+						rl::Rectangle src = {
+							.x = (float)entity.current_h_frame * SHIP_WIDTH,
+							.y = (float)entity.current_v_frame * SHIP_HEIGHT,
+							.width = SHIP_WIDTH,
+							.height = SHIP_HEIGHT,
+						};
+						rl::Vector2 pos = {
+							.x = entity.x,
+							.y = entity.y,
+						};
+						rl::drawTextureRec(tex, src, pos, rl::WHITE);
+					}
+					else if(flag_b == EntityFlag.IS_NOT_ANIMATED) {
+						rl::drawTexture(tex, (int)entity.x, (int)entity.y, rl::WHITE);
+					}
+				}
 			}
 			//Render gui text
 			else if(flag_a == EntityFlag.HAS_GUI_TEXT) {

@@ -6,6 +6,7 @@ import std::io;
 
 enum ArtAsset {
     NONE,
+    PLAYER_SHIP_A,
     SHIP_BLUE,
     LASER_RED,
     BG_A,
@@ -21,7 +22,11 @@ fn GameAssets gameAssetsInitAndLoad() {
 
     EnumMap{ArtAsset, rl::Texture2D} textures;
     textures[ArtAsset.BG_A] = rl::loadTexture("resources/img/bg_a.png");
+
     textures[ArtAsset.SHIP_BLUE] = rl::loadTexture("resources/img/ship_blue_a.png");
+    
+    textures[ArtAsset.PLAYER_SHIP_A] = rl::loadTexture("resources/img/player_ship_a.png");
+
     textures[ArtAsset.LASER_RED] = rl::loadTexture("resources/img/laser_red.png");
 
     GameAssets assets = {

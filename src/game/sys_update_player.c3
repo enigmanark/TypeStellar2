@@ -18,8 +18,8 @@ fn void updatePlayer(GameState* state, List{GameEventConfig}* event_pump, float 
 					entity.x += PLAYER_SHIP_SPEED * delta;
 				}
 				//Clamp Right
-				if((entity.x + SHIP_SIZE) > WINDOW_WIDTH) {
-					entity.x = WINDOW_WIDTH - SHIP_SIZE;
+				if((entity.x + SHIP_WIDTH) > WINDOW_WIDTH) {
+					entity.x = WINDOW_WIDTH - SHIP_WIDTH;
 				}
 				//Clamp left
 				else if(entity.x < 0) {

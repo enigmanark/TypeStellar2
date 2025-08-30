@@ -25,13 +25,9 @@ fn GameState* initPlayState(GameAssets* assets) {
 	bg.x = 0;
 	bg.y = 0;
 	bg.addFlag(EntityFlag.HAS_SPRITE);
+	bg.addFlag(EntityFlag.IS_NOT_ANIMATED);
 
-	Entity* player = state.entity_manager.newEntity();
-	player.art = ArtAsset.SHIP_BLUE;
-	player.x = (WINDOW_WIDTH / 2) - (SHIP_SIZE / 2);
-	player.y = WINDOW_HEIGHT - (SHIP_SIZE + 20);
-	player.addFlag(EntityFlag.HAS_SPRITE);
-	player.addFlag(EntityFlag.IS_PLAYER);
+	state.entity_manager.newPlayer();
 
 	io::printfn("INFO: Play State initialized.");
 
