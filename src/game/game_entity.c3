@@ -21,16 +21,6 @@ fn Entity* EntityManager.newEntity(EntityManager* self) {
 	ent.art = ArtAsset.NONE;
 	ent.alive = true;
 	ent.flags.init(mem);
-	ent.x = 0;
-	ent.y = 0;
-	ent.max_h_frames = 0;
-	ent.max_v_frames = 0;
-	ent.current_h_frame = 0;
-	ent.current_v_frame = 0;
-	ent.anim_delay = 0;
-	ent.anim_timer = 0f;
-	ent.fire_timer = 0f;
-	ent.fire_timeout = false;
 
 	self.next_id++;
 
@@ -42,14 +32,14 @@ fn Entity* EntityManager.newEntity(EntityManager* self) {
 fn Entity* EntityManager.newPlayer(EntityManager* self) {
 	Entity* player = self.newEntity();
 	player.art = ArtAsset.PLAYER_SHIP_A;
-	player.x = (WINDOW_WIDTH / 2) - (SHIP_WIDTH / 2);
-	player.y = WINDOW_HEIGHT - (SHIP_HEIGHT + 20);
-	player.max_h_frames = 2;
-	player.max_v_frames = 1;
-	player.current_h_frame = 0;
-	player.current_v_frame = 0;
-	player.anim_delay = SHIP_ANIM_SPEED;
-	player.anim_timer = 0f;
+	player.position.x = (WINDOW_WIDTH / 2) - (SHIP_WIDTH / 2);
+	player.position.y = WINDOW_HEIGHT - (SHIP_HEIGHT + 20);
+	player.anim.max_h_frames = 2;
+	player.anim.max_v_frames = 1;
+	player.anim.current_h_frame = 0;
+	player.anim.current_v_frame = 0;
+	player.anim.delay = SHIP_ANIM_SPEED;
+	player.anim.timer = 0f;
 
 	player.addFlag(EntityFlag.IS_SHIP);
 	player.addFlag(EntityFlag.IS_ANIMATED);
@@ -62,8 +52,8 @@ fn Entity* EntityManager.newPlayer(EntityManager* self) {
 fn Entity* EntityManager.newPlayerLaser(EntityManager* self, Entity* player_ent) {
 	Entity* laser = self.newEntity();
 	laser.art = ArtAsset.LASER_RED;
-	laser.x = player_ent.x + (SHIP_WIDTH / 2) - (LASER_WIDTH / 2);
-	laser.y = player_ent.y;
+	laser.position.x = player_ent.position.x + (SHIP_WIDTH / 2) - (LASER_WIDTH / 2);
+	laser.position.y = player_ent.position.y;
 	
 	laser.addFlag(EntityFlag.IS_LASER);
 	laser.addFlag(EntityFlag.IS_PLAYER_LASER);
@@ -94,26 +84,52 @@ enum EntityFlag {
 	HAS_GUI_TEXT,
 }
 
+struct Position {
+	float x;
+	float y;
+}
+
+struct Move {
+	float move_x;
+	float move_y;
+	float speed;
+}
+
+struct EmitterConfig {
+	GameEventConfig config;
+	rl::KeyboardKey key;
+}
+
+struct GuiText {
+	String text;
+	int size;
+}
+
+struct Animation {
+	int current_h_frame;
+	int current_v_frame;
+	int max_h_frames;
+	int max_v_frames;
+	float delay;
+	float timer;
+}
+
+struct Weapon {
+	bool timeout;
+	float timer;
+}
+
 struct Entity {
 	long id;
 	bool alive;
 	ArtAsset art;
 	List{EntityFlag} flags;
-	float x;
-	float y;
-	float speed;
-	GameEventConfig emitter_config;
-	rl::KeyboardKey emitter_key;
-	String gui_text;
-	int gui_text_size;
-	int max_h_frames;
-	int max_v_frames;
-	int current_h_frame;
-	int current_v_frame;
-	float anim_delay;
-	float anim_timer;
-	bool fire_timeout;
-	float fire_timer;
+	Position position;
+	Move move;
+	EmitterConfig emitter_config;
+	GuiText gui_text;
+	Animation anim;
+	Weapon weapon;
 }
 
 fn void Entity.unload(Entity* self) {

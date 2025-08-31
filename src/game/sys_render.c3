@@ -18,27 +18,34 @@ fn void sysRender(GameState* state, GameAssets* assets) {
 				foreach(flag_b_index, flag_b : flags) {
 					if(flag_b == EntityFlag.IS_ANIMATED) {
 						rl::Rectangle src = {
-							.x = (float)entity.current_h_frame * SHIP_WIDTH,
-							.y = (float)entity.current_v_frame * SHIP_HEIGHT,
+							.x = (float)entity.anim.current_h_frame * SHIP_WIDTH,
+							.y = (float)entity.anim.current_v_frame * SHIP_HEIGHT,
 							.width = SHIP_WIDTH,
 							.height = SHIP_HEIGHT,
 						};
 						rl::Vector2 pos = {
-							.x = entity.x,
-							.y = entity.y,
+							.x = entity.position.x,
+							.y = entity.position.y,
 						};
 						rl::drawTextureRec(tex, src, pos, rl::WHITE);
 					}
 					else if(flag_b == EntityFlag.IS_NOT_ANIMATED) {
-						rl::drawTexture(tex, (int)entity.x, (int)entity.y, rl::WHITE);
+						rl::drawTexture(tex, (int)entity.position.x, (int)entity.position.y, rl::WHITE);
 					}
 				}
 			}
 			//Render gui text
 			else if(flag_a == EntityFlag.HAS_GUI_TEXT) {
 				rl::Font font = assets.main_font;
-				ZString text = (ZString)entity.gui_text;
-				rl::drawTextEx(font, text, (Vector2){ entity.x, entity.y }, (float)entity.gui_text_size, 2, rl::WHITE);
+				ZString text = (ZString)entity.gui_text.text;
+				rl::drawTextEx(
+					font, 
+					text, 
+					(Vector2){ entity.position.x, entity.position.y }, 
+					(float)entity.gui_text.size, 
+					2, 
+					rl::WHITE
+				);
 			}
 		}
 	}

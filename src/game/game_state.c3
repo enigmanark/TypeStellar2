@@ -22,8 +22,8 @@ fn GameState* initPlayState(GameAssets* assets) {
 	
 	Entity* bg = state.entity_manager.newEntity();
 	bg.art = ArtAsset.BG_A;
-	bg.x = 0;
-	bg.y = 0;
+	bg.position.x = 0;
+	bg.position.y = 0;
 	bg.addFlag(EntityFlag.HAS_SPRITE);
 	bg.addFlag(EntityFlag.IS_NOT_ANIMATED);
 
@@ -42,16 +42,16 @@ fn GameState* initTitleState(GameAssets* assets) {
 
 	Entity* title = state.entity_manager.newEntity();
 	title.art = ArtAsset.NONE;
-	title.gui_text = WINDOW_TITLE;
-	title.gui_text_size = 70;
+	title.gui_text.text = WINDOW_TITLE;
+	title.gui_text.size = 70;
 
-	rl::Vector2 title_size = rl::measureTextEx(assets.main_font, (ZString)title.gui_text, title.gui_text_size, 2);
-	title.x = (WINDOW_WIDTH / 2) - (title_size.x / 2);
-	title.y = WINDOW_HEIGHT / 2 - 100;
+	rl::Vector2 title_size = rl::measureTextEx(assets.main_font, (ZString)title.gui_text.text, title.gui_text.size, 2);
+	title.position.x = (WINDOW_WIDTH / 2) - (title_size.x / 2);
+	title.position.y = WINDOW_HEIGHT / 2 - 100;
 	
 	
-	title.emitter_config = newEventConfig(GameEvent.CHANGE_STATE, EngineState.PLAY);
-	title.emitter_key = rl::KEY_SPACE;
+	title.emitter_config.config = newEventConfig(GameEvent.CHANGE_STATE, EngineState.PLAY);
+	title.emitter_config.key = rl::KEY_SPACE;
 	title.addFlag(EntityFlag.HAS_GUI_TEXT);
 	title.addFlag(EntityFlag.HAS_EVENT_KEY_EMITTER);
 

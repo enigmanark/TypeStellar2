@@ -11,12 +11,12 @@ fn void updateAnimation(Entity* entity, List{GameEventConfig}* event_pump, float
         if(flag_a == EntityFlag.IS_ANIMATED) {
             foreach(index_flag_b, flag_b : flags) {
                 if(flag_b == EntityFlag.IS_SHIP) {
-                    entity.anim_timer += delta;
-                    if(entity.anim_timer >= entity.anim_delay) {
-                        entity.anim_timer = 0f;
-                        entity.current_h_frame++;
-                        if(entity.current_h_frame >= entity.max_h_frames) {
-                            entity.current_h_frame = 0;
+                    entity.anim.timer += delta;
+                    if(entity.anim.timer >= entity.anim.delay) {
+                        entity.anim.timer = 0f;
+                        entity.anim.current_h_frame++;
+                        if(entity.anim.current_h_frame >= entity.anim.max_h_frames) {
+                            entity.anim.current_h_frame = 0;
                         }
                     }
                 }

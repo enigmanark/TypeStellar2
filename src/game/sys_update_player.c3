@@ -10,35 +10,35 @@ fn void updatePlayer(GameState* state, List{GameEventConfig}* event_pump, float 
             //Is player?
 			if(flag_a == EntityFlag.IS_PLAYER) {
 				//If laser fire is cooling down
-				if(entity.fire_timeout) {
-					entity.fire_timer += delta;
-					if(entity.fire_timer >= PLAYER_FIRE_DELAY) {
-						entity.fire_timer = 0f;
-						entity.fire_timeout = false;
+				if(entity.weapon.timeout) {
+					entity.weapon.timer += delta;
+					if(entity.weapon.timer >= PLAYER_FIRE_DELAY) {
+						entity.weapon.timer = 0f;
+						entity.weapon.timeout = false;
 					}
 				}
 
 				//Move left
 				if(rl::isKeyDown(rl::KEY_A)) {
-					entity.x -= PLAYER_SHIP_SPEED * delta;
+					entity.position.x -= PLAYER_SHIP_SPEED * delta;
 				}
 				//Move Right
 				if(rl::isKeyDown(rl::KEY_D)) {
-					entity.x += PLAYER_SHIP_SPEED * delta;
+					entity.position.x += PLAYER_SHIP_SPEED * delta;
 				}
 				//Clamp Right
-				if((entity.x + SHIP_WIDTH) > WINDOW_WIDTH) {
-					entity.x = WINDOW_WIDTH - SHIP_WIDTH;
+				if((entity.position.x + SHIP_WIDTH) > WINDOW_WIDTH) {
+					entity.position.x = WINDOW_WIDTH - SHIP_WIDTH;
 				}
 				//Clamp left
-				else if(entity.x < 0) {
-					entity.x = 0;
+				else if(entity.position.x < 0) {
+					entity.position.x = 0;
 				}
 
 				//Fire?
-				if(rl::isKeyDown(rl::KEY_SPACE) && !entity.fire_timeout) {
+				if(rl::isKeyDown(rl::KEY_SPACE) && !entity.weapon.timeout) {
 					state.entity_manager.newPlayerLaser(entity);
-					entity.fire_timeout = true;
+					entity.weapon.timeout = true;
 				}
 			}
         }

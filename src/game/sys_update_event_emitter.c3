@@ -9,8 +9,8 @@ fn void updateEventEmitters(Entity* entity, List{GameEventConfig}* event_pump, f
         //Has event key emitter?
         if(flag_a == EntityFlag.HAS_EVENT_KEY_EMITTER) {
             //Key pressed?
-            if(rl::isKeyPressed(entity.emitter_key)) {
-                event_pump.push(entity.emitter_config);
+            if(rl::isKeyPressed(entity.emitter_config.key)) {
+                event_pump.push(entity.emitter_config.config);
             }
         }
     }
