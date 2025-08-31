@@ -95,11 +95,6 @@ struct Move {
 	float speed;
 }
 
-struct EmitterConfig {
-	GameEventConfig config;
-	rl::KeyboardKey key;
-}
-
 struct GuiText {
 	String text;
 	int size;
@@ -126,7 +121,6 @@ struct Entity {
 	List{EntityFlag} flags;
 	Position position;
 	Move move;
-	EmitterConfig emitter_config;
 	GuiText gui_text;
 	Animation anim;
 	Weapon weapon;

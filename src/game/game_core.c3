@@ -2,6 +2,7 @@ module game;
 
 import std::io;
 import raylib5::rl;
+import raygui::rg;
 import std::collections::list;
 import std::core::mem;
 
@@ -9,6 +10,7 @@ fn void runGame() {
 	io::printfn("INFO: Initializing game engine.");
     rl::initWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
 	rl::setTargetFPS(60);
+	rl::setExitKey(rl::KEY_NULL);
     
 	GameAssets assets = gameAssetsInitAndLoad();
 	GameState* current_state = initTitleState(&assets);

@@ -52,11 +52,7 @@ fn GameState* initTitleState(GameAssets* assets) {
 	title.position.x = (WINDOW_WIDTH / 2) - (title_size.x / 2);
 	title.position.y = WINDOW_HEIGHT / 2 - 100;
 	
-	
-	title.emitter_config.config = newEventConfig(GameEvent.CHANGE_STATE, EngineStateId.GAME_LEVEL);
-	title.emitter_config.key = rl::KEY_SPACE;
 	title.addFlag(EntityFlag.HAS_GUI_TEXT);
-	title.addFlag(EntityFlag.HAS_EVENT_KEY_EMITTER);
 
 	io::printfn("INFO: Title State initialized.");
 	return state;
@@ -72,5 +68,6 @@ fn void GameState.unload(GameState* self) {
 fn void GameState.run(GameState* self, List{GameEventConfig}* event_pump, GameAssets* assets) {
 	float delta = rl::getFrameTime();
 	sysUpdate(self, event_pump, delta);
+	sysUpdateGUI(self, event_pump, delta);
 	sysRender(self, assets);
 }

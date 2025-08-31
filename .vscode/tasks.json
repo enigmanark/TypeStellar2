@@ -6,7 +6,7 @@
         {
             "label": "C3C Run Game",
             "type": "shell",
-            "command": "c3c run",
+            "command": "/home/johnathanc/Apps/c3/c3c run --use-old-enums",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

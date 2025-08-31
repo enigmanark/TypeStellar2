@@ -10,10 +10,11 @@ fn void sysUpdate(GameState* state, List{GameEventConfig}* event_pump, float del
     
 	//Process entities and update them
 	foreach(index, entity : state.entity_manager.entities) {
-        updateEventEmitters(entity, event_pump, delta);
         updateLaser(entity, event_pump, delta);
 		updateAnimation(entity, event_pump, delta);
 	}
+
+	
 
 	//Find entities that are marked as alive and keep them, let the rest be deleted
 	List{Entity*} new_entity_list;
