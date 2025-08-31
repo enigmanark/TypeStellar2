@@ -9,6 +9,15 @@ fn void updatePlayer(GameState* state, List{GameEventConfig}* event_pump, float 
         foreach(index_flag_a, flag_a : entity.flags) {	
             //Is player?
 			if(flag_a == EntityFlag.IS_PLAYER) {
+				//If laser fire is cooling down
+				if(entity.fire_timeout) {
+					entity.fire_timer += delta;
+					if(entity.fire_timer >= PLAYER_FIRE_DELAY) {
+						entity.fire_timer = 0f;
+						entity.fire_timeout = false;
+					}
+				}
+
 				//Move left
 				if(rl::isKeyDown(rl::KEY_A)) {
 					entity.x -= PLAYER_SHIP_SPEED * delta;
@@ -27,8 +36,9 @@ fn void updatePlayer(GameState* state, List{GameEventConfig}* event_pump, float 
 				}
 
 				//Fire?
-				if(rl::isKeyDown(rl::KEY_SPACE)) {
+				if(rl::isKeyDown(rl::KEY_SPACE) && !entity.fire_timeout) {
 					state.entity_manager.newPlayerLaser(entity);
+					entity.fire_timeout = true;
 				}
 			}
         }

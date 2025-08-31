@@ -12,3 +12,4 @@ const int LASER_HEIGHT = 40;
 const int LASER_WIDTH = 6;
 const int PLAYER_SHIP_SPEED = 500;
 const float SHIP_ANIM_SPEED = 0.25;
+const float PLAYER_FIRE_DELAY = 0.15;

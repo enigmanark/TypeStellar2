@@ -29,6 +29,8 @@ fn Entity* EntityManager.newEntity(EntityManager* self) {
 	ent.current_v_frame = 0;
 	ent.anim_delay = 0;
 	ent.anim_timer = 0f;
+	ent.fire_timer = 0f;
+	ent.fire_timeout = false;
 
 	self.next_id++;
 
@@ -110,6 +112,8 @@ struct Entity {
 	int current_v_frame;
 	float anim_delay;
 	float anim_timer;
+	bool fire_timeout;
+	float fire_timer;
 }
 
 fn void Entity.unload(Entity* self) {
