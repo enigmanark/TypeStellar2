@@ -4,20 +4,22 @@ import std::io;
 import std::collections::list;
 import raylib5::rl;
 
-enum EngineState {
+enum EngineStateId {
 	TITLE,
-	PLAY,
+	GAME_LEVEL,
 	GAMEOVER,
 }
 
 struct GameState {
+	EngineStateId state_id;
 	EntityManager* entity_manager;
 }
 
-fn GameState* initPlayState(GameAssets* assets) {
-	io::printfn("INFO: Initializing Play State...");
+fn GameState* initGameLevelState(GameAssets* assets) {
+	io::printfn("INFO: Initializing Game Level State...");
 	GameState* state = mem::new(GameState);
 
+	state.state_id = EngineStateId.GAME_LEVEL;
 	state.entity_manager = initEntityManager();
 	
 	Entity* bg = state.entity_manager.newEntity();
@@ -29,7 +31,7 @@ fn GameState* initPlayState(GameAssets* assets) {
 
 	state.entity_manager.newPlayer();
 
-	io::printfn("INFO: Play State initialized.");
+	io::printfn("INFO: Game Level State initialized.");
 
 	return state;
 }
@@ -38,6 +40,7 @@ fn GameState* initTitleState(GameAssets* assets) {
 	io::printfn("INFO: Initializing Title State...");
 	GameState* state = mem::new(GameState);
 
+	state.state_id = EngineStateId.TITLE;
 	state.entity_manager = initEntityManager();
 
 	Entity* title = state.entity_manager.newEntity();
@@ -50,7 +53,7 @@ fn GameState* initTitleState(GameAssets* assets) {
 	title.position.y = WINDOW_HEIGHT / 2 - 100;
 	
 	
-	title.emitter_config.config = newEventConfig(GameEvent.CHANGE_STATE, EngineState.PLAY);
+	title.emitter_config.config = newEventConfig(GameEvent.CHANGE_STATE, EngineStateId.GAME_LEVEL);
 	title.emitter_config.key = rl::KEY_SPACE;
 	title.addFlag(EntityFlag.HAS_GUI_TEXT);
 	title.addFlag(EntityFlag.HAS_EVENT_KEY_EMITTER);

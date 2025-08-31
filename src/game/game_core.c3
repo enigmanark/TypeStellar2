@@ -24,10 +24,10 @@ fn void runGame() {
 		foreach(index, &config : event_pump) {
 			if(config.event == GameEvent.CHANGE_STATE) {
 				current_state.unload();
-				if(config.state_to_change_to == EngineState.PLAY) {
-					current_state = initPlayState(&assets);
+				if(config.state_to_change_to == EngineStateId.GAME_LEVEL) {
+					current_state = initGameLevelState(&assets);
 				}
-				else if(config.state_to_change_to == EngineState.TITLE) {
+				else if(config.state_to_change_to == EngineStateId.TITLE) {
 					current_state = initTitleState(&assets);
 				}
 				config.completed = true;
