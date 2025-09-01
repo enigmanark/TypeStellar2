@@ -10,6 +10,7 @@ enum ArtAsset {
     SHIP_BLUE,
     LASER_RED,
     BG_A,
+    STARDUST,
 }
 
 struct GameAssets {
@@ -22,6 +23,8 @@ fn GameAssets gameAssetsInitAndLoad() {
 
     EnumMap{ArtAsset, rl::Texture2D} textures;
     textures[ArtAsset.BG_A] = rl::loadTexture("resources/img/bg_a.png");
+
+    textures[ArtAsset.STARDUST] = rl::loadTexture("resources/img/stardust.png");
 
     textures[ArtAsset.SHIP_BLUE] = rl::loadTexture("resources/img/ship_blue_a.png");
     

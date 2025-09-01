@@ -22,6 +22,7 @@ fn GameState* initGameLevelState(GameAssets* assets) {
 	state.state_id = EngineStateId.GAME_LEVEL;
 	state.entity_manager = initEntityManager();
 	
+	io::printfn("INFO: Initializing level entities...");
 	Entity* bg = state.entity_manager.newEntity();
 	bg.art = ArtAsset.BG_A;
 	bg.position.x = 0;
@@ -30,6 +31,19 @@ fn GameState* initGameLevelState(GameAssets* assets) {
 	bg.addFlag(EntityFlag.IS_NOT_ANIMATED);
 
 	state.entity_manager.newPlayer();
+
+	for(int s = 0; s < 200; s++) {
+		Entity* stardust = state.entity_manager.newEntity();
+		stardust.art = ArtAsset.STARDUST;
+		stardust.position.x = rl::getRandomValue(0, WINDOW_WIDTH);
+		stardust.position.y = rl::getRandomValue(0, WINDOW_HEIGHT);
+		stardust.move.speed = rl::getRandomValue(STARDUST_MIN_SPEED, STARDUST_MAX_SPEED);
+		stardust.addFlag(EntityFlag.IS_NOT_ANIMATED);
+		stardust.addFlag(EntityFlag.HAS_SPRITE);
+		stardust.addFlag(EntityFlag.IS_STARDUST);
+	}
+
+	io::printfn("INFO: Initialized entities.");
 
 	io::printfn("INFO: Game Level State initialized.");
 

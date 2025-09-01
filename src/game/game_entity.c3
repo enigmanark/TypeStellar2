@@ -75,12 +75,13 @@ fn void EntityManager.unload(EntityManager* self) {
 enum EntityFlag {
 	IS_PLAYER,
 	IS_SHIP,
+	IS_SHIP_ENEMY,
 	IS_PLAYER_LASER,
 	IS_LASER,
+	IS_STARDUST,
 	IS_ANIMATED,
 	IS_NOT_ANIMATED,
 	HAS_SPRITE,
-	HAS_EVENT_KEY_EMITTER,
 	HAS_GUI_TEXT,
 }
 
