@@ -6,7 +6,7 @@ import raylib5::rl;
 
 fn void updateMovement(Entity* entity, List{GameEventConfig}* event_pump, float delta) {
     foreach(index_flag_a, flag_a : entity.getFlags()) {
-        //Is laser?
+        //Is player laser?
         if(flag_a == EntityFlag.IS_PLAYER_LASER) {
             entity.position.y -= PLAYER_LASER_SPEED * delta;
             if((entity.position.y + LASER_HEIGHT) < 0) {
@@ -18,6 +18,12 @@ fn void updateMovement(Entity* entity, List{GameEventConfig}* event_pump, float 
             entity.position.y += entity.move.speed * delta;
             if(entity.position.y > WINDOW_HEIGHT) {
                 entity.position.y = 0;
+            }
+        }
+        else if(flag_a == EntityFlag.IS_SHIP_ENEMY) {
+            entity.position.y += entity.move.speed * delta;
+            if(entity.position.y > WINDOW_HEIGHT) {
+                entity.alive = false;
             }
         }
     }

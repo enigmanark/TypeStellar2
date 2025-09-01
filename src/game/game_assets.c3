@@ -7,7 +7,8 @@ import std::io;
 enum ArtAsset {
     NONE,
     PLAYER_SHIP_A,
-    SHIP_BLUE,
+    ENEMY_SHIP_A_RED,
+    EXPLOSION_A,
     LASER_RED,
     BG_A,
     STARDUST,
@@ -25,9 +26,11 @@ fn GameAssets gameAssetsInitAndLoad() {
     textures[ArtAsset.BG_A] = rl::loadTexture("resources/img/bg_a.png");
 
     textures[ArtAsset.STARDUST] = rl::loadTexture("resources/img/stardust.png");
-
-    textures[ArtAsset.SHIP_BLUE] = rl::loadTexture("resources/img/ship_blue_a.png");
     
+    textures[ArtAsset.ENEMY_SHIP_A_RED] = rl::loadTexture("resources/img/enemy_ship_a_red.png");
+
+    textures[ArtAsset.EXPLOSION_A] = rl::loadTexture("resources/img/explosion_a.png");
+
     textures[ArtAsset.PLAYER_SHIP_A] = rl::loadTexture("resources/img/player_ship_a.png");
 
     textures[ArtAsset.LASER_RED] = rl::loadTexture("resources/img/laser_red.png");

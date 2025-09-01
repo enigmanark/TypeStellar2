@@ -30,7 +30,7 @@ fn GameState* initGameLevelState(GameAssets* assets) {
 	bg.addFlag(EntityFlag.HAS_SPRITE);
 	bg.addFlag(EntityFlag.IS_NOT_ANIMATED);
 
-	state.entity_manager.newPlayer();
+	state.entity_manager.newPlayer(assets);
 
 	for(int s = 0; s < 200; s++) {
 		Entity* stardust = state.entity_manager.newEntity();
@@ -42,6 +42,12 @@ fn GameState* initGameLevelState(GameAssets* assets) {
 		stardust.addFlag(EntityFlag.HAS_SPRITE);
 		stardust.addFlag(EntityFlag.IS_STARDUST);
 	}
+
+	Entity* sp = state.entity_manager.newEntity();
+	sp.enemy_spawner.active = true;
+	sp.enemy_spawner.timer = 0f;
+	sp.enemy_spawner.delay = 2;
+	sp.addFlag(EntityFlag.IS_ENEMY_SPAWNER);
 
 	io::printfn("INFO: Initialized entities.");
 
@@ -81,7 +87,6 @@ fn void GameState.unload(GameState* self) {
 
 fn void GameState.run(GameState* self, List{GameEventConfig}* event_pump, GameAssets* assets) {
 	float delta = rl::getFrameTime();
-	sysUpdate(self, event_pump, delta);
-	sysUpdateGUI(self, event_pump, delta);
+	sysUpdate(self, event_pump, assets, delta);
 	sysRender(self, assets);
 }

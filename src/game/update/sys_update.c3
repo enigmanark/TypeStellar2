@@ -4,7 +4,7 @@ import std::io;
 import std::collections::list;
 import raylib5::rl;
 
-fn void sysUpdate(GameState* state, List{GameEventConfig}* event_pump, float delta) {
+fn void sysUpdate(GameState* state, List{GameEventConfig}* event_pump, GameAssets* assets, float delta) {
     //Process player and update
 	updatePlayer(state, event_pump, delta);
     
@@ -12,6 +12,7 @@ fn void sysUpdate(GameState* state, List{GameEventConfig}* event_pump, float del
 	foreach(index, entity : state.entity_manager.entities) {
         updateMovement(entity, event_pump, delta);
 		updateAnimation(entity, event_pump, delta);
+		updateSpawner(state, entity, assets, delta);
 	}
 
 	//Find entities that are marked as alive and keep them, let the rest be deleted
@@ -27,4 +28,6 @@ fn void sysUpdate(GameState* state, List{GameEventConfig}* event_pump, float del
 	}
 	state.entity_manager.entities.free();
 	state.entity_manager.entities = new_entity_list;
+
+	updateGUI(state, event_pump, delta);
 }

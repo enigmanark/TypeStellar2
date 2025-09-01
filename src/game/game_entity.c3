@@ -29,15 +29,19 @@ fn Entity* EntityManager.newEntity(EntityManager* self) {
 	return ent;
 }
 
-fn Entity* EntityManager.newPlayer(EntityManager* self) {
+fn Entity* EntityManager.newPlayer(EntityManager* self, GameAssets* assets) {
 	Entity* player = self.newEntity();
 	player.art = ArtAsset.PLAYER_SHIP_A;
-	player.position.x = (WINDOW_WIDTH / 2) - (SHIP_WIDTH / 2);
-	player.position.y = WINDOW_HEIGHT - (SHIP_HEIGHT + 20);
+	float art_width = assets.getTexture(player.art).width;
+	float art_height = assets.getTexture(player.art).height;
+	player.position.x = (WINDOW_WIDTH / 2) - (art_width / 2);
+	player.position.y = WINDOW_HEIGHT - (art_height + 20);
 	player.anim.max_h_frames = 2;
 	player.anim.max_v_frames = 1;
 	player.anim.current_h_frame = 0;
 	player.anim.current_v_frame = 0;
+	player.anim.frame_width = (int)art_width / 2;
+	player.anim.frame_height = (int)art_height;
 	player.anim.delay = SHIP_ANIM_SPEED;
 	player.anim.timer = 0f;
 
@@ -52,7 +56,8 @@ fn Entity* EntityManager.newPlayer(EntityManager* self) {
 fn Entity* EntityManager.newPlayerLaser(EntityManager* self, Entity* player_ent) {
 	Entity* laser = self.newEntity();
 	laser.art = ArtAsset.LASER_RED;
-	laser.position.x = player_ent.position.x + (SHIP_WIDTH / 2) - (LASER_WIDTH / 2);
+	float player_width = player_ent.anim.frame_width;
+	laser.position.x = player_ent.position.x + (player_width / 2) - (LASER_WIDTH / 2);
 	laser.position.y = player_ent.position.y;
 	
 	laser.addFlag(EntityFlag.IS_LASER);
@@ -81,6 +86,7 @@ enum EntityFlag {
 	IS_STARDUST,
 	IS_ANIMATED,
 	IS_NOT_ANIMATED,
+	IS_ENEMY_SPAWNER,
 	HAS_SPRITE,
 	HAS_GUI_TEXT,
 }
@@ -106,6 +112,8 @@ struct Animation {
 	int current_v_frame;
 	int max_h_frames;
 	int max_v_frames;
+	int frame_width;
+	int frame_height;
 	float delay;
 	float timer;
 }
@@ -113,6 +121,12 @@ struct Animation {
 struct Weapon {
 	bool timeout;
 	float timer;
+}
+
+struct EnemySpawner {
+	bool active;
+	float timer;
+	float delay;
 }
 
 struct Entity {
@@ -125,6 +139,7 @@ struct Entity {
 	GuiText gui_text;
 	Animation anim;
 	Weapon weapon;
+	EnemySpawner enemy_spawner;
 }
 
 fn void Entity.unload(Entity* self) {

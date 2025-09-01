@@ -7,7 +7,7 @@ import std::collections::list;
 const int BUTTON_WIDTH = 220;
 const int BUTTON_HEIGHT = 45;
 
-fn void sysUpdateGUI(GameState* state, List{GameEventConfig}* event_pump, float delta) {
+fn void updateGUI(GameState* state, List{GameEventConfig}* event_pump, float delta) {
     if(state.state_id == EngineStateId.TITLE) {
         rl::Rectangle button_rect = {
             .x = (WINDOW_WIDTH / 2) - BUTTON_WIDTH / 2,

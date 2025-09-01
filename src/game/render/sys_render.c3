@@ -18,10 +18,10 @@ fn void sysRender(GameState* state, GameAssets* assets) {
 				foreach(flag_b_index, flag_b : flags) {
 					if(flag_b == EntityFlag.IS_ANIMATED) {
 						rl::Rectangle src = {
-							.x = (float)entity.anim.current_h_frame * SHIP_WIDTH,
-							.y = (float)entity.anim.current_v_frame * SHIP_HEIGHT,
-							.width = SHIP_WIDTH,
-							.height = SHIP_HEIGHT,
+							.x = (float)entity.anim.current_h_frame * entity.anim.frame_width,
+							.y = (float)entity.anim.current_v_frame * entity.anim.frame_height,
+							.width = entity.anim.frame_width,
+							.height = entity.anim.frame_height,
 						};
 						rl::Vector2 pos = {
 							.x = entity.position.x,
