@@ -8,6 +8,7 @@ const String WINDOW_TITLE = "Type Stellar 2";
 const int TARGET_FPS = 60;
 const int SHIP_HEIGHT = 110;
 const int SHIP_WIDTH = 90;
+const int PLAYER_LASER_SPEED = 650;
 const int LASER_HEIGHT = 40;
 const int LASER_WIDTH = 6;
 const int PLAYER_SHIP_SPEED = 500;

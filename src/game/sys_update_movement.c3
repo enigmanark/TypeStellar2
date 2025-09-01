@@ -8,7 +8,7 @@ fn void updateMovement(Entity* entity, List{GameEventConfig}* event_pump, float 
     foreach(index_flag_a, flag_a : entity.getFlags()) {
         //Is laser?
         if(flag_a == EntityFlag.IS_PLAYER_LASER) {
-            entity.position.y -= 600 * delta;
+            entity.position.y -= PLAYER_LASER_SPEED * delta;
             if((entity.position.y + LASER_HEIGHT) < 0) {
                 entity.alive = false;
             }
