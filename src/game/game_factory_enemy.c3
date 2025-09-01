@@ -15,11 +15,20 @@ fn Entity* EntityManager.makeEnemy(EntityManager* self, EnemyId enemy_id, float 
     e.anim.delay = SHIP_ANIM_SPEED;
     e.anim.timer = 0f;
 
+    e.sprite.rotation = 0;
+    e.sprite.origin = {
+        .x = 0f,
+        .y = 0f,
+    };
+
+    e.sprite.flip_v = true;
+
     if(enemy_id == EnemyId.ENEMY_A_RED) {
-        e.art = ArtAsset.ENEMY_SHIP_A_RED;
-        e.move.speed = 300;
-        e.anim.frame_width = assets.getTexture(e.art).width / 2;
-        e.anim.frame_height = assets.getTexture(e.art).height; 
+        e.sprite.art = ArtAsset.ENEMY_SHIP_A_RED;
+        
+        e.move.speed = 30;
+        e.anim.frame_width = assets.getTexture(e.sprite.art).width / 2;
+        e.anim.frame_height = assets.getTexture(e.sprite.art).height; 
     }
 
     e.addFlag(EntityFlag.HAS_SPRITE);

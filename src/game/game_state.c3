@@ -24,7 +24,7 @@ fn GameState* initGameLevelState(GameAssets* assets) {
 	
 	io::printfn("INFO: Initializing level entities...");
 	Entity* bg = state.entity_manager.newEntity();
-	bg.art = ArtAsset.BG_A;
+	bg.sprite.art = ArtAsset.BG_A;
 	bg.position.x = 0;
 	bg.position.y = 0;
 	bg.addFlag(EntityFlag.HAS_SPRITE);
@@ -34,7 +34,7 @@ fn GameState* initGameLevelState(GameAssets* assets) {
 
 	for(int s = 0; s < 200; s++) {
 		Entity* stardust = state.entity_manager.newEntity();
-		stardust.art = ArtAsset.STARDUST;
+		stardust.sprite.art = ArtAsset.STARDUST;
 		stardust.position.x = rl::getRandomValue(0, WINDOW_WIDTH);
 		stardust.position.y = rl::getRandomValue(0, WINDOW_HEIGHT);
 		stardust.move.speed = rl::getRandomValue(STARDUST_MIN_SPEED, STARDUST_MAX_SPEED);
@@ -46,7 +46,7 @@ fn GameState* initGameLevelState(GameAssets* assets) {
 	Entity* sp = state.entity_manager.newEntity();
 	sp.enemy_spawner.active = true;
 	sp.enemy_spawner.timer = 0f;
-	sp.enemy_spawner.delay = 2;
+	sp.enemy_spawner.delay = 1.5f;
 	sp.addFlag(EntityFlag.IS_ENEMY_SPAWNER);
 
 	io::printfn("INFO: Initialized entities.");
@@ -64,7 +64,7 @@ fn GameState* initTitleState(GameAssets* assets) {
 	state.entity_manager = initEntityManager();
 
 	Entity* title = state.entity_manager.newEntity();
-	title.art = ArtAsset.NONE;
+	title.sprite.art = ArtAsset.NONE;
 	title.gui_text.text = WINDOW_TITLE;
 	title.gui_text.size = 70;
 

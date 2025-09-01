@@ -18,7 +18,13 @@ fn EntityManager* initEntityManager() {
 fn Entity* EntityManager.newEntity(EntityManager* self) {
 	Entity* ent = mem::new(Entity);
 	ent.id = self.next_id;
-	ent.art = ArtAsset.NONE;
+	ent.sprite.art = ArtAsset.NONE;
+	ent.sprite.origin = {
+		.x = 0f,
+		.y = 0f,
+	};
+	ent.sprite.flip_h = false;
+	ent.sprite.flip_v = false;
 	ent.alive = true;
 	ent.flags.init(mem);
 
@@ -31,9 +37,10 @@ fn Entity* EntityManager.newEntity(EntityManager* self) {
 
 fn Entity* EntityManager.newPlayer(EntityManager* self, GameAssets* assets) {
 	Entity* player = self.newEntity();
-	player.art = ArtAsset.PLAYER_SHIP_A;
-	float art_width = assets.getTexture(player.art).width;
-	float art_height = assets.getTexture(player.art).height;
+	player.sprite.art = ArtAsset.PLAYER_SHIP_A;
+	player.sprite.rotation = 0;
+	float art_width = assets.getTexture(player.sprite.art).width;
+	float art_height = assets.getTexture(player.sprite.art).height;
 	player.position.x = (WINDOW_WIDTH / 2) - (art_width / 2);
 	player.position.y = WINDOW_HEIGHT - (art_height + 20);
 	player.anim.max_h_frames = 2;
@@ -55,7 +62,8 @@ fn Entity* EntityManager.newPlayer(EntityManager* self, GameAssets* assets) {
 
 fn Entity* EntityManager.newPlayerLaser(EntityManager* self, Entity* player_ent) {
 	Entity* laser = self.newEntity();
-	laser.art = ArtAsset.LASER_RED;
+	laser.sprite.art = ArtAsset.LASER_RED;
+	laser.sprite.rotation = 0;
 	float player_width = player_ent.anim.frame_width;
 	laser.position.x = player_ent.position.x + (player_width / 2) - (LASER_WIDTH / 2);
 	laser.position.y = player_ent.position.y;
@@ -107,6 +115,14 @@ struct GuiText {
 	int size;
 }
 
+struct Sprite {
+	ArtAsset art;
+	float rotation;
+	rl::Vector2 origin;
+	bool flip_h;
+	bool flip_v;
+}
+
 struct Animation {
 	int current_h_frame;
 	int current_v_frame;
@@ -132,7 +148,7 @@ struct EnemySpawner {
 struct Entity {
 	long id;
 	bool alive;
-	ArtAsset art;
+	Sprite sprite;
 	List{EntityFlag} flags;
 	Position position;
 	Move move;
