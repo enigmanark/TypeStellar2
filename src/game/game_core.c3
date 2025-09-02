@@ -32,6 +32,9 @@ fn void runGame() {
 				else if(config.state_to_change_to == EngineStateId.TITLE) {
 					current_state = initTitleState(&assets);
 				}
+				else if(config.state_to_change_to == EngineStateId.STATION) {
+					current_state = initStation(&assets);
+				}
 				config.completed = true;
 			}
 		}

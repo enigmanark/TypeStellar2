@@ -7,12 +7,26 @@ import raylib5::rl;
 enum EngineStateId {
 	TITLE,
 	GAME_LEVEL,
+	STATION,
 	GAMEOVER,
 }
 
 struct GameState {
 	EngineStateId state_id;
 	EntityManager* entity_manager;
+}
+
+fn GameState* initStation(GameAssets* assets) {
+	io::printfn("INFO: Initializing Station state...");
+	GameState* state = mem::new(GameState);
+
+	state.state_id = EngineStateId.STATION;
+	state.entity_manager = initEntityManager();
+
+	io::printfn("INFO: Initialized Station state.");
+
+	return state;
+
 }
 
 fn GameState* initGameLevelState(GameAssets* assets) {

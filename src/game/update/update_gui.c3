@@ -18,8 +18,27 @@ fn void updateGUI(GameState* state, List{GameEventConfig}* event_pump, float del
         // Set the default text size
         rg::guiSetStyle(rg::GuiControl.DEFAULT, rg::TEXT_SIZE, 40);
         if(rg::guiButton(button_rect, "Play")) {
-            GameEventConfig to_level = newEventConfig(GameEvent.CHANGE_STATE, EngineStateId.GAME_LEVEL);
-            event_pump.push(to_level);
+            GameEventConfig to_station = newEventConfig(GameEvent.CHANGE_STATE, EngineStateId.STATION);
+            event_pump.push(to_station);
         }
     }
+    else if(state.state_id == EngineStateId.STATION) {
+        rl::Rectangle button_rect = getButtonRect(10, 10, 200, 50);
+        rg::guiSetStyle(rg::GuiControl.DEFAULT, rg::TEXT_SIZE, 25);
+        if(rg::guiButton(button_rect, "Start Mission")) {
+            GameEventConfig to_level = newEventConfig(GameEvent.CHANGE_STATE, EngineStateId.GAME_LEVEL);
+            event_pump.push(to_level);
+        }    
+    }
+}
+
+fn rl::Rectangle getButtonRect(float x, float y, float width, float height) {
+    rl::Rectangle rect = {
+        .x = x,
+        .y = y,
+        .width = width,
+        .height = height,
+    };
+
+    return rect;
 }
